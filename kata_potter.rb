@@ -10,19 +10,10 @@ def calculate_discount_price(books)
 end
 
 def discount_applicable?(books)
-  books.count >= MIN_BOOKS_FOR_DISCOUNT
+  books.count == books.uniq.count && books.count >= MIN_BOOKS_FOR_DISCOUNT
 end
 
 def basket(books)
-  
-  if books.count == books.uniq.count
-    if discount_applicable?(books)
-      return calculate_discount_price(books.count)
-    end
-    return books.count * BOOK_PRICE
-  end
-  
+  return calculate_discount_price(books.count) if discount_applicable?(books)
   books.count * BOOK_PRICE
-  
-  
 end
