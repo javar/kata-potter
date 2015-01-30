@@ -15,10 +15,17 @@ end
 
 def basket(books)
   return calculate_discount_price(books.count) if discount_applicable?(books)
-  return calculate_discount_price(books.uniq.count) if discount_applicable?(books.uniq)
-  books.uniq.each {|book| 
-    index_to_delete = books.index(book)
-    books.slice(index_to_delete)
-  }
+  price_with_disccount = 0
+  
+  if discount_applicable?(books.uniq)
+    price_with_disccount = calculate_discount_price(books.uniq.count) 
+  
+    books.uniq.each {|book| 
+      index_to_delete = books.index(book)
+      books.slice!(index_to_delete)
+    }
+    return price_with_disccount + books.count * BOOK_PRICE
+  
+  end
   books.count * BOOK_PRICE
 end
