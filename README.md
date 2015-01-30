@@ -1,4 +1,4 @@
-# katta-potter
+# kata-potter
 Kata Potter in ruby
 
 Problem Description
