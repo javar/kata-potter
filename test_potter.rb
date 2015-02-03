@@ -41,5 +41,10 @@ class TestPotter < Test::Unit::TestCase
   def test_3_different_books_and_one_repeated_book
     assert_equal 29.6, basket([1,2,3,1])
   end
+  
+  def test_2_different_books_and_3_repeated_book
+    assert_equal 51.20, basket([1,1,2,2,3,3,4,5])
+    #assert_equal 51.20, basket([1,2,3,4,1,2,3,5])
+  end
 
 end
