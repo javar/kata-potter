@@ -14,14 +14,10 @@ def discount_applicable?(books)
 end
 
 def basket_split(books, size)
-  
   [books.first(size), books.last(books.count - size)]
 end
 
 def basket(books)
-  #return calculate_discount_price(books.count) if discount_applicable?(books)
-  
-  #if discount_applicable?(books)
    result = books.permutation.map{|element|
       (0..element.length).map{|size|
         partial_total = 0
@@ -32,22 +28,8 @@ def basket(books)
             partial_total += books_splited.count * BOOK_PRICE
           end
         }
-        #puts "partial_total= #{partial_total}"
         partial_total          
       }.min    
     }.min
-    #puts "result=#{result}"
     return result
-    
-    #price_with_disccount = calculate_discount_price(books.uniq.count) 
-    #books.uniq.each {|book| 
-    #  index_to_delete = books.index(book)
-    #  books.slice!(index_to_delete)
-    #}
-    #return price_with_disccount + books.count * BOOK_PRICE 
-    #else
-    #  books.count * BOOK_PRICE 
-    #end
-  
-
 end
