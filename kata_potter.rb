@@ -17,19 +17,22 @@ def basket_split(books, size)
   [books.first(size), books.last(books.count - size)]
 end
 
+def calculate_partial_total(books)
+  partial_total = 0
+  if discount_applicable?(books)
+    partial_total += calculate_discount_price(books.count)
+  else  
+    partial_total += books.count * BOOK_PRICE
+  end
+end
+
 def basket(books)
    result = books.permutation.map{|element|
       (0..element.length).map{|size|
-        partial_total = 0
-        basket_split(element, size).each{|books_splited|
-          if discount_applicable?(books_splited)
-            partial_total += calculate_discount_price(books_splited.count)
-          else 
-            partial_total += books_splited.count * BOOK_PRICE
-          end
-        }
-        partial_total          
+        basket_split(element, size).map{|books_splited|
+         calculate_partial_total(books_splited) 
+        }.reduce(:+)
       }.min    
-    }.min
-    return result
+   }.min
+  result
 end
