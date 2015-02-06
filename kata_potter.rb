@@ -13,31 +13,29 @@ def discount_applicable?(books)
   books.count == books.uniq.count && books.count >= MIN_BOOKS_FOR_DISCOUNT
 end
 
-def basket_split_to_calculate_min_price(books, size)
+def basket_split(books, size)
   [books.first(size), books.last(books.count - size)]
 end
 
 def calculate_partial_total(books)
-  partial_total = 0
-  if discount_applicable?(books)
-    partial_total += calculate_discount_price(books.count)
-  else  
-    partial_total += books.count * BOOK_PRICE
-  end
+    return  calculate_discount_price(books.count) if discount_applicable?(books)
+    books.count * BOOK_PRICE
 end
 
-def calculate_min_price_for_each_group_of_books(element)
-  (0..element.length).map{|size|
-    basket_split_to_calculate_min_price(element, size).map{|books_splited|
+def calculate_min_price(group)
+  (0..group.length).map{|size|
+    basket_split(group, size).map{|books_splited|
       calculate_partial_total(books_splited) 
     }.reduce(:+)
   }.min    
+end
 
+def generate_all_available_baskets(books)
+  books.permutation.to_a.uniq
 end
 
 def basket(books)
-   result = books.permutation.map{|element|
-      calculate_min_price_for_each_group_of_books(element) 
+   generate_all_available_baskets(books).map{|basket|
+      calculate_min_price(basket) 
    }.min
-  result
 end
