@@ -1,10 +1,13 @@
 require_relative "./basket.rb"
 require_relative "./discount.rb"
 
+BOOK_PRICE = 8
+MIN_BOOKS_FOR_DISCOUNT = 2
+
 class PriceCalculator
 	def partial_total(books)
 		discount = Discount.new
-    	return  discount.calculate_discount_price(books.count) if discount.discount_applicable?(books)
+    	return  discount.calculate_price(books.count) if discount.applicable?(books)
     	books.count * BOOK_PRICE
 	end
 

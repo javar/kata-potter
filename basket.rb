@@ -1,7 +1,7 @@
 require_relative "./price_calculator.rb"
 
 class Basket
-	def generate_all_available_baskets(books)
+	def generate_all_available(books)
   		books.permutation.to_a.uniq
 	end
 
