@@ -3,8 +3,10 @@ require_relative "./basket.rb"
 
 def basket(books)
   basket = Basket.new
+  basket.generate_all_available(books).map{|basket| basket_price(basket)}.min
+end
+
+def basket_price (basket)
   price_calculator = PriceCalculator.new
-   basket.generate_all_available(books).map{|basket|
-      price_calculator.min_price(basket) 
-   }.min
+  price_calculator.min_price(basket)
 end
